@@ -1,12 +1,12 @@
 { 
-  "name" : "rtf",
-  "version" : "0.0.4",
+  "name" : "@happy-doc/rtf",
+  "version" : "0.0.5",
   "description" : "Assists with creating rich text documents.",
   "main" : "./lib/rtf.js",
-  "author" : "Jonathan Rowny",
+  "author" : "HappyDoc",
   "repository" : {
     "type" : "git",
-    "url" : "https://github.com/jrowny/node-rtf.git"
+    "url" : "https://github.com/happy-doc/node-rtf.git"
   },
   "keywords": [
     "rtf",
