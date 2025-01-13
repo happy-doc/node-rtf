@@ -1,6 +1,6 @@
 { 
   "name" : "@happy-doc/rtf",
-  "version" : "0.0.2",
+  "version" : "0.0.3",
   "description" : "Assists with creating rich text documents.",
   "main" : "./lib/rtf.js",
   "author" : "HappyDoc",
