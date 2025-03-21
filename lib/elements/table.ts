@@ -14,26 +14,26 @@ function columnCount(target: any[][]): number {
 }
 
 export class TableElement extends Element {
-  _data: any[][];
-  _rowFormats: any[];
+  _data: (Element | string)[][];
   _rows: number;
   _cols: number;
+
+  //public
+  columnWidths: number[];
 
   constructor(format?: any) {
     super(format);
     this._data = [];
-    this._rowFormats = [];
     this._rows = 0;
     this._cols = 0;
+    this.columnWidths = [];
   }
 
-  addRow(row: any[], formats?: any[]): void {
-    // Store row-specific formats (if any) and then add the row.
-    this._rowFormats[this._data.length] = formats ?? [];
+  addRow(row: (Element | string)[]): void {
     this._data.push(row);
   }
 
-  setData(data: any[][]): void {
+  setData(data: (Element | string)[][]): void {
     this._data = data;
   }
 
@@ -45,15 +45,30 @@ export class TableElement extends Element {
     this._rows = this._data.length;
     this._cols = columnCount(this._data);
 
-    let pre = "\\trowd\\trautofit1\\intbl";
-    let post = "{\\trowd\\trautofit1\\intbl";
-    for (let j = 0; j < this._cols; j++) {
-      pre += "\\clbrdrt\\brdrs\\brdrw10\\clbrdrl\\brdrs\\brdrw10" +
-        "\\clbrdrb\\brdrs\\brdrw10\\clbrdrr\\brdrs\\brdrw10";
-      pre += "\\cellx" + (j + 1).toString();
-      post += "\\cellx" + (j + 1).toString();
+    //trowd: table row defaults
+    //trgaph150: row gap 150 twips
+    let pre = "\\trowd \\trgaph150";//\\trautofit1\\intbl";
+    let post = "";//\\trautofit1\\intbl";
+
+    let defaultCellWidth = 10000 / this._cols;
+    let actualColumnWidths = Array(this._cols).fill(defaultCellWidth);
+
+    for (let w = 0; w < this.columnWidths.length; w++) {
+      if (this.columnWidths[w] > 0) {
+        //convert inches to twips if it's set
+        actualColumnWidths[w] = this.columnWidths[w] * 1440;
+      }
     }
-    post += "\\row }";
+
+    for (let j = 0; j < this._cols; j++) {
+      //set the width of the cell
+      pre += " \\cellx" + (actualColumnWidths[j]).toString();
+
+      post += "";
+    }
+    pre += "\n";
+
+    post += " \\row }\n";
 
     const tasks: Array<(rowcb: (err: Error | null, result?: string) => void) => void> = [];
 
@@ -74,7 +89,11 @@ export class TableElement extends Element {
           let out = "";
           if (results) {
             results.forEach(result => {
-              out += result + "\\cell ";
+              //replace the opening and closing curlies so that we style 
+              //the cell and not the just the text within the cell
+              result = result?.replace(/^{/, "").replace(/}\n?$/, "") ?? "";
+
+              out += result + " \\cell ";
             });
           }
           rowcb(null, out);
@@ -95,11 +114,11 @@ export class TableElement extends Element {
 
       if (results) {
         results.forEach(result => {
-          rows += pre + "{" + result + " }" + post;
+          rows += pre + "{\\pard\\intbl " + result + " " + post;
         });
       }
 
-      const rtf = "\\par" + rows + "\\pard";
+      const rtf = rows;
       callback(null, rtf);
     });
   }
