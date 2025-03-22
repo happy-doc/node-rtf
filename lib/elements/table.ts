@@ -19,7 +19,11 @@ export class TableElement extends Element {
   _cols: number;
 
   //public
+  //array of column widths in inches
   columnWidths: number[];
+
+  //order is the same as CSS, top, right, bottom, left (defined as Points)
+  cellBorders: number[];
 
   constructor(format?: any) {
     super(format);
@@ -27,6 +31,8 @@ export class TableElement extends Element {
     this._rows = 0;
     this._cols = 0;
     this.columnWidths = [];
+
+    this.cellBorders = [0, 0, 0, 0];
   }
 
   addRow(row: (Element | string)[]): void {
@@ -47,8 +53,8 @@ export class TableElement extends Element {
 
     //trowd: table row defaults
     //trgaph150: row gap 150 twips
-    let pre = "\\trowd \\trgaph150";//\\trautofit1\\intbl";
-    let post = "";//\\trautofit1\\intbl";
+    let pre = "\\trowd \\trgaph150";
+    let post = "";
 
     let defaultCellWidth = 10000 / this._cols;
     let actualColumnWidths = Array(this._cols).fill(defaultCellWidth);
@@ -61,6 +67,12 @@ export class TableElement extends Element {
     }
 
     for (let j = 0; j < this._cols; j++) {
+
+      pre += `\\clbrdrt${this.getBorderString(this.cellBorders[0])}\n`;// Top border: single line, pts -> twips
+      pre += `\\clbrdrr${this.getBorderString(this.cellBorders[1])}\n`;// Right border: single line, pts -> twips
+      pre += `\\clbrdrb${this.getBorderString(this.cellBorders[2])}\n`;// Bottom border: single line, pts -> twips
+      pre += `\\clbrdrl${this.getBorderString(this.cellBorders[3])}\n`;// Left border: single line, pts -> twips
+
       //set the width of the cell
       pre += " \\cellx" + (actualColumnWidths[j]).toString();
 
@@ -121,5 +133,11 @@ export class TableElement extends Element {
       const rtf = rows;
       callback(null, rtf);
     });
+  }
+
+  getBorderString(width: number) {
+    return (width > 0
+      ? "\\brdrs\\brdrw" + width * 20 + "\n"// pts -> twips
+      : "\\brdrnone");
   }
 }
