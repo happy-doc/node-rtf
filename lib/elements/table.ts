@@ -53,7 +53,7 @@ export class TableElement extends Element {
 
     //trowd: table row defaults
     //trgaph150: row gap 150 twips
-    let pre = "\\trowd \\trgaph150";
+    let pre = "{ \\trowd\\trgaph150";
     let post = "";
 
     let defaultCellWidth = 10000 / this._cols;
@@ -74,7 +74,7 @@ export class TableElement extends Element {
       pre += `\\clbrdrl${this.getBorderString(this.cellBorders[3])}\n`;// Left border: single line, pts -> twips
 
       //set the width of the cell
-      pre += " \\cellx" + (actualColumnWidths[j]).toString();
+      pre += "\\cellx" + (actualColumnWidths[j]).toString();
 
       post += "";
     }
@@ -126,7 +126,7 @@ export class TableElement extends Element {
 
       if (results) {
         results.forEach(result => {
-          rows += pre + "{\\pard\\intbl " + result + " " + post;
+          rows += pre + "\\pard\\intbl " + result + " " + post;
         });
       }
 

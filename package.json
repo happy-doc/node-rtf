@@ -1,6 +1,6 @@
 {
     "name": "@happy-doc/rtf",
-    "version": "0.1.0-beta.0",
+    "version": "0.1.0",
     "description": "Assists with creating rich text documents.",
     "main": "dist/index.ts",
     "types": "dist/index.d.ts",
