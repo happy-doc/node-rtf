@@ -7,6 +7,7 @@ import { Orientation } from "./orientation";
 import { TextElement } from "./elements/text";
 import { GroupElement } from "./elements/group";
 import async from "async";
+import { CommandElement } from "./elements/command";
 
 export class RTF {
   pageNumbering: boolean;
@@ -18,7 +19,7 @@ export class RTF {
   columns: number;
   columnLines: boolean;
   orientation: boolean;
-  elements: any[]; // Replace with a union type if you have Element, GroupElement, etc.
+  elements: (Element | GroupElement)[];
   colorTable: any[];
   fontTable: string[];
 
@@ -66,7 +67,7 @@ export class RTF {
     if (groupName !== undefined && this._groupIndex(groupName) >= 0) {
       (this.elements[this._groupIndex(groupName)] as GroupElement).addElement({ text: command, safe: false });
     } else {
-      this.elements.push({ text: command, safe: false });
+      this.elements.push(new CommandElement(command, false));
     }
   }
 

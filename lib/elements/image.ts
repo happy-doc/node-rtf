@@ -1,6 +1,8 @@
 import { Element } from "./element";
 import * as fs from "fs";
 
+var imageinfo = require('imageinfo')
+
 export class ImageElement extends Element {
   path: string;
   dpi: number;
@@ -16,7 +18,6 @@ export class ImageElement extends Element {
     fontTable: any,
     callback: (err: Error | null, result?: string) => void
   ): void {
-    var imageinfo = require('imageinfo')
 
     fs.readFile(this.path, (err, buffer) => {
       if (err) {

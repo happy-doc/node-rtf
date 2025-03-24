@@ -21,6 +21,8 @@ table2.setData([
 // Adding an extra row.
 table2.addRow(["Banana", "$0.12", "1"]);
 
+myDoc.addTable(table2);
+
 myDoc.createDocument((err, output) => {
   if (err) {
     console.error(err);
