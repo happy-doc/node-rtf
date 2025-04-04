@@ -8,5 +8,6 @@ export const Fonts = {
   VERDANA: "Verdana",
   COURIER_NEW: "Courier New",
   PALATINO: "Palatino Linotype",
-  TIMES_NEW_ROMAN: "Times New Roman"
+  TIMES_NEW_ROMAN: "Times New Roman",
+  CALIBARI: "Calibri",
 } as const;

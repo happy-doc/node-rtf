@@ -1,4 +1,3 @@
-import { RGB } from "./rgb";
 import { Element } from "./elements/element"; // adjust the types as needed
 import { Format } from "./format";
 import * as Utils from "./rtf-utils";
@@ -8,6 +7,7 @@ import { TextElement } from "./elements/text";
 import { GroupElement } from "./elements/group";
 import async from "async";
 import { CommandElement } from "./elements/command";
+import { LinkElement } from "./elements/link";
 
 export class RTF {
   pageNumbering: boolean;
@@ -44,6 +44,16 @@ export class RTF {
 
   writeText(text: string, format?: Format, groupName?: string) {
     const element = new TextElement(text, format);
+    const groupIndex = this._groupIndex(groupName);
+    if (groupName !== undefined && groupIndex >= 0) {
+      (this.elements[groupIndex] as GroupElement).addElement(element);
+    } else {
+      this.elements.push(element);
+    }
+  }
+
+  writeLink(url: string, displayText: string, format?: Format, groupName?: string) {
+    const element = new LinkElement(url, displayText, format);
     const groupIndex = this._groupIndex(groupName);
     if (groupName !== undefined && groupIndex >= 0) {
       (this.elements[groupIndex] as GroupElement).addElement(element);

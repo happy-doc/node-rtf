@@ -10,6 +10,11 @@ export function getRTFSafeText(text: any): string {
   if (typeof text === "object" && text.hasOwnProperty("safe") && !text.safe) {
     return text.text;
   }
+
+  if (typeof text !== 'string') {
+    return '';
+  }
+
   return text.replaceAll('\\', '\\\\')
     .replaceAll('{', '\\{')
     .replaceAll('}', '\\}')
