@@ -17,3 +17,5 @@ export * from './elements/group';
 export * from './elements/image';
 export * from './elements/table';
 export * from './elements/text';
+export * from './elements/link';
+export * from './elements/command';

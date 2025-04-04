@@ -8,4 +8,7 @@ export class RGB {
     this.green = green;
     this.blue = blue;
   }
+
+  // Add a static constant for convenience
+  static readonly BLUE = new RGB(0, 0, 255);
 }
