@@ -52,8 +52,8 @@ export class RTF {
     }
   }
 
-  writeLink(url: string, displayText: string, format?: Format, groupName?: string) {
-    const element = new LinkElement(url, displayText, format);
+  writeLink(url: string, displayText: string, format?: Format, groupName?: string, isExternalURL?: boolean) {
+    const element = new LinkElement(url, displayText, format, isExternalURL);
     const groupIndex = this._groupIndex(groupName);
     if (groupName !== undefined && groupIndex >= 0) {
       (this.elements[groupIndex] as GroupElement).addElement(element);

@@ -81,6 +81,9 @@ export class LinkElement extends Element {
 
             rtfString += `\\ul0\\b0\\i0}`; // Reset specific styles and end group. \\pard might be needed depending on context.
 
+            // Add the closing braces for the RTF structure (if needed)
+            //rtfString += `\\pard}`; // End the paragraph and reset formatting
+
             callback(null, rtfString);
         } catch (err) {
             callback(err instanceof Error ? err : new Error(String(err)));
