@@ -1,6 +1,7 @@
 export const Fonts = {
   ARIAL: "Arial",
-  COMIC_SANS: "Comic Sans MS",
+  CALIBRI: "Calibri",
+  COMIC_SANS: "Comic Sans MS",  
   GEORGIA: "Georgia",
   IMPACT: "Impact",
   TAHOMA: "Tahoma",
@@ -9,5 +10,4 @@ export const Fonts = {
   COURIER_NEW: "Courier New",
   PALATINO: "Palatino Linotype",
   TIMES_NEW_ROMAN: "Times New Roman",
-  CALIBARI: "Calibri",
 } as const;
