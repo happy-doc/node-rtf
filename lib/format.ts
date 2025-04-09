@@ -34,11 +34,13 @@ export class Format {
     }
     if (this.colorPos < 0 && this.color !== undefined) {
       colorTable.push(this.color);
-      this.colorPos = colorTable.length;
+      // Assign the correct 0-based index
+      this.colorPos = colorTable.length - 1;
     }
     if (this.backgroundColorPos < 0 && this.backgroundColor !== undefined) {
       colorTable.push(this.backgroundColor);
-      this.backgroundColorPos = colorTable.length;
+      // assign the correct 0-based index
+      this.backgroundColorPos = colorTable.length - 1;
     }
   }
 
